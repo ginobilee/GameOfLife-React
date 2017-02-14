@@ -1,0 +1,38 @@
+#game{
+  margin:20px auto;
+  width: 80%;
+  text-align: center;
+  color: white;
+  border: 1px red solid;
+}
+#ctrBtns{
+  padding: 20px 25px 20px 25px ;
+  background-color:#333;
+  width: 40%;
+  margin: 0 auto;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.cellRow{
+  margin: 0;
+  padding: 0;
+  height: 15px;
+}
+.cell{
+  display: inline-block;
+  width:15px;
+  height:15px;
+  background-color: black;
+  border: 1px solid gray;
+}
+.red{
+  background-color: red;
+}
+#config{
+  background-color: #333;
+  width: 50%;
+  margin: 0 auto;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  text-align: left;
+}
