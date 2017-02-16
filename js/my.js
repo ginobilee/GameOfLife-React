@@ -1,19 +1,3 @@
-class CellClick extends React.Component{
-  constructor(props) {
-    super(props);
-    this.cellClick=this.cellClick.bind(this);
-  }
-  cellClick(){
-    this.props.cellClick(this.props['data-key']);
-  }
-  render(){
-    const cellValue=this.props.cellValue;
-    return (
-      <div onClick={this.cellClick} className={cellValue==1?'red inCell':'black inCell'}></div>
-    )
-  }
-}
-
 class GameManage extends React.Component{
   constructor(){
     super();
@@ -127,7 +111,9 @@ class GameManage extends React.Component{
       generation:0,
     })
   }
-  cellClick(val){
+  cellClick(e){
+    let str=e.target.getAttribute('data-key');
+    let val = parseInt(str);
     let len=this.state.cellCols,hei=this.state.cellRows,i=Math.floor(val/len),j=val%len;
     //setState
     const clickArray = this.state.curCells;
@@ -209,7 +195,7 @@ class GameManage extends React.Component{
     const cellArray = narray.map(function(ele,ind){
       let cellRow = ele.map(function(e,i){
           tempValue=narray[ind][i];
-          return (<div className="cell" key={ind*len+i}><CellClick key={ind*len+i} data-key={ind*len+i} cellClick={this.cellClick} cellValue={tempValue} /></div>);
+          return (<div className={tempValue==0?'inCell black':'inCell red'} key={ind*len+i} data-key={ind*len+i} onClick={this.cellClick}></div>);
         },this);
       return <div className='cellRow' key={ind}>{cellRow}</div>;
     },this);

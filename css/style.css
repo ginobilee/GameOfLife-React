@@ -26,10 +26,6 @@ body{
   height: 12px;
   line-height: 12px;
 }
-.cell{
-  display: inline-block;
-  margin:0;
-}
 .red{
   background-color: red;
 }
@@ -46,6 +42,7 @@ body{
   padding: 10px 50px;
 }
 .inCell{
+  display: inline-block;
   width:12px;
   height:12px;
   margin: 0;
