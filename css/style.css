@@ -1,3 +1,6 @@
+body{
+  background-color: #ddd;
+}
 #game{
   margin:20px auto;
   text-align: center;
@@ -6,21 +9,26 @@
 #ctrBtns{
   padding: 20px 25px 20px 25px ;
   background-color:#333;
-  width: 40%;
-  margin: 0 auto 0 auto;
+  display: inline-block;
+  margin:0 auto;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
 #cells{
-  padding: 0;
+  margin: 0 auto;
+  border: 10px solid #333;
+  display: inline-block;
+  border-radius: 5px;
 }
 .cellRow{
   margin: 0;
   padding: 0;
   height: 12px;
+  line-height: 12px;
 }
 .cell{
   display: inline-block;
+  margin:0;
 }
 .red{
   background-color: red;
@@ -30,16 +38,17 @@
 }
 #config{
   background-color: #333;
-  width: 50%;
+  display: inline-block;
   margin: 0 auto;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   text-align: left;
+  padding: 10px 50px;
 }
 .inCell{
   width:12px;
   height:12px;
-  border: 1px solid gray;
   margin: 0;
-  padding: 0
+  padding: 0;
+  border: 1px solid gray;
 }
