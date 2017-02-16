@@ -164,7 +164,8 @@ class GameManage extends React.Component{
           <button className='btn btn-primary' onClick={this.clear}>Clear</button>
           <span>Generations:{this.state.generation}</span>
         </div>
-        <div id='cells' cellClick={this.cellClick}>{cellArray}</div>
+        <div><div id='cells' cellClick={this.cellClick}>{cellArray}</div></div>
+        <div>
         <div id='config'>
           <div id='sizeCtr'>
             <span>Board Size:</span>
@@ -178,6 +179,7 @@ class GameManage extends React.Component{
             <button className='btn btn-primary'>Medium</button>
             <button className='btn btn-primary'>Fast</button>
           </div>
+        </div>
         </div>
      </div>
     );
