@@ -56,10 +56,11 @@ class GameManage extends React.Component{
       if(this.state.runState==0){
       this.startRun();
       }
-    }.bind(this),50);
+    }.bind(this),500);
   }
   startRun(){
       //get the next array
+      console.log(Date.now()+':startRun begins');
       let curArray = this.state.curCells,nextArray = this.state.nextCells,tempNext=[];
       let i=0,j=0,iMinus=0,jMinus=0,iPlus=0,jPlus=0,len=this.state.cellCols,hei=this.state.cellRows,val=0,rezult=0;
       for(i=0;i<hei;i++){
@@ -78,6 +79,7 @@ class GameManage extends React.Component{
           }else{nextArray[i][j]=0;}
         }
       }
+      //console.log(Date.now()+':computing completed');
       //if all dead ,stop
       let allDead = true;
       outerLoop:
@@ -95,13 +97,14 @@ class GameManage extends React.Component{
         rState = 1;
         //geneNew=0;
       }
+      //console.log(Date.now()+':startRun completed before setState');
       this.setState({
         curCells:nextArray,
         nextCells:curArray,
         runState:rState,
         generation:geneNew
       });
-      //console.log("startRun");
+      //console.log(Date.now()+':startRun completed after setState');
   }
   pause(){
     clearInterval(this.timer);
@@ -200,17 +203,17 @@ class GameManage extends React.Component{
   }
   render(){
     //curCells->divs
-    console.log(Date.now());
+    //console.log(Date.now()+':into render ');
     let cells=[];
     let i=0,j=0,len=this.state.cellCols,hei=this.state.cellRows,narray=this.state.curCells,tempValue=0;
     const cellArray = narray.map(function(ele,ind){
       let cellRow = ele.map(function(e,i){
           tempValue=narray[ind][i];
-          return (<div className="cell" key={ind*len+i}><CellClick data-key={ind*len+i} cellClick={this.cellClick} cellValue={tempValue} /></div>);
+          return (<div className="cell" key={ind*len+i}><CellClick key={ind*len+i} data-key={ind*len+i} cellClick={this.cellClick} cellValue={tempValue} /></div>);
         },this);
       return <div className='cellRow' key={ind}>{cellRow}</div>;
     },this);
-    console.log(Date.now());
+    console.log(Date.now()+':complete array building');
     return (
       <div>
         <div id='ctrBtns'>
