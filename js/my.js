@@ -22,8 +22,9 @@ class GameManage extends React.Component{
     this.clear=this.clear.bind(this);
     this.startRun = this.startRun.bind(this);
     this.cellClick=this.cellClick.bind(this);
+    this.changeSize=this.changeSize.bind(this);
     //create two arrays to store changes
-    let curArray = [],nextArray = [],cols=50,rows=30,i=0,j=0;//init for the biggest area
+    let curArray = [],nextArray = [],cols=60,rows=40,i=0,j=0;//init for the biggest area
     for(i=0;i<rows;i++){
       let temp=[];
       for(j=0;j<cols;j++){
@@ -45,8 +46,7 @@ class GameManage extends React.Component{
       cellRows:rows,
       simSpeed:0,
       runState:0,//0 for still alive ,1 for all dead
-      generation:0,
-      arrIndex:true//true for thirdArray,false for nextArray
+      generation:0
     }
    //console.log(curCells);
  }
@@ -60,7 +60,7 @@ class GameManage extends React.Component{
   }
   startRun(){
       //get the next array
-      let curArray = this.state.curCells,nextArray = this.state.nextCells,arrFlag=this.state.arrIndex,tempNext=[];
+      let curArray = this.state.curCells,nextArray = this.state.nextCells,tempNext=[];
       let i=0,j=0,iMinus=0,jMinus=0,iPlus=0,jPlus=0,len=this.state.cellCols,hei=this.state.cellRows,val=0,rezult=0;
       for(i=0;i<hei;i++){
         for(j=0;j<len;j++){
@@ -90,7 +90,7 @@ class GameManage extends React.Component{
         }
       }
       //change state
-      let geneNew = this.state.generation + 1,nextIndex=!arrFlag,rState=0;
+      let geneNew = this.state.generation + 1,rState=0;
       if(allDead){
         rState = 1;
         //geneNew=0;
@@ -112,7 +112,7 @@ class GameManage extends React.Component{
   }
   clear(){
     clearInterval(this.timer);
-    let arrFlag=this.state.arrIndex,temparray=this.state.curCells,len=this.state.cellCols,hei=this.state.cellRows,i=0,j=0;
+    let temparray=this.state.curCells,len=this.state.cellCols,hei=this.state.cellRows,i=0,j=0;
     for(i=0;i<hei;i++){
       for(j=0;j<len;j++){
         temparray[i][j]=0;
@@ -133,8 +133,74 @@ class GameManage extends React.Component{
       curCells:clickArray
     });
   }
+  changeSize(e){
+    console.log(Date.now()+':begin change size');
+    this.timer && clearInterval(this.timer);
+    //get the current size value
+    let len=this.state.cellCols,curSize=0,nextSize=e.target.value;
+    switch (len) {
+      case 50:
+        curSize=1;
+        break;
+      case 60:
+        curSize=2;
+        break;
+      case 80:
+        curSize=3;
+        break;
+      default:
+        curSize=9;
+    }
+    if(curSize != nextSize){
+      //change the size
+      let i=0,j=0,nextLen=0,nextHei=0,curArray=this.state.curCells,curNextArray=this.state.nextCells,newCurArr=[],newNextArr=[];
+      curArray=null;curNextArray=null;
+      switch (nextSize) {
+        case '1':
+          nextLen=50;nextHei=30;
+          break;
+        case '2':
+          nextLen=60;nextHei=40;
+          break;
+        case '3':
+          nextLen=80;nextHei=50;
+          break;
+        default:
+          nextLen=10;nextHei=8;
+      }
+      for(i=0;i<nextHei;i++){
+        let tempRow=[];
+        for(j=0;j<nextLen;j++){
+          tempRow.push(0);
+        }
+        newCurArr.push(tempRow);
+      }
+      for(i=0;i<nextHei;i++){
+        let tempRow=[];
+        for(j=0;j<nextLen;j++){
+          tempRow.push(0);
+        }
+        newNextArr.push(tempRow);
+      }
+      this.setState({
+        cellCols:nextLen,
+        cellRows:nextHei,
+        curCells:newCurArr,
+        nextCells:newNextArr,
+        runState:1
+      })
+    }
+    console.log(Date.now()+':stopped change size');
+  }
+  componentDidMount(){
+    console.log(Date.now()+':mounted');
+  }
+  componentDidUpdate(){
+    console.log(Date.now()+':updateed');
+  }
   render(){
     //curCells->divs
+    console.log(Date.now());
     let cells=[];
     let i=0,j=0,len=this.state.cellCols,hei=this.state.cellRows,narray=this.state.curCells,tempValue=0;
     const cellArray = narray.map(function(ele,ind){
@@ -144,6 +210,7 @@ class GameManage extends React.Component{
         },this);
       return <div className='cellRow' key={ind}>{cellRow}</div>;
     },this);
+    console.log(Date.now());
     return (
       <div>
         <div id='ctrBtns'>
@@ -157,9 +224,9 @@ class GameManage extends React.Component{
         <div id='config'>
           <div id='sizeCtr'>
             <span>Board Size:</span>
-            <button className='btn btn-primary'>Size:50X30</button>
-            <button className='btn btn-primary'>Size:60X40</button>
-            <button className='btn btn-primary'>Size:80X50</button>
+            <button className='btn btn-primary' onClick={this.changeSize} value='1'>Size:50X30</button>
+            <button className='btn btn-primary' onClick={this.changeSize} value='2'>Size:60X40</button>
+            <button className='btn btn-primary' onClick={this.changeSize} value='3'>Size:80X50</button>
           </div>
           <div id='speedCtr'>
             <span>Sim Speed:</span>
@@ -171,6 +238,7 @@ class GameManage extends React.Component{
         </div>
      </div>
     );
+
   }
 }
 
