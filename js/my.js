@@ -22,28 +22,27 @@ class GameManage extends React.Component{
     this.clear=this.clear.bind(this);
     this.startRun = this.startRun.bind(this);
     this.cellClick=this.cellClick.bind(this);
-    //create a two-dimension array for init
-    let cellCols = cols,cellRows=rows,i=0,j=0,curCells=[];
-    for(i=0;i<cellRows;i++){
-      let tempR=[];
-      for(j=0;j<cellCols;j++){
-        tempR.push(0);
+    //create two arrays to store changes
+    let curArray = [],nextArray = [],cols=50,rows=30,i=0,j=0;//init for the biggest area
+    for(i=0;i<rows;i++){
+      let temp=[];
+      for(j=0;j<cols;j++){
+        temp.push(0);
       }
-      curCells.push(tempR);
+      curArray.push(temp);
     }
-    /*let temp=0;//generate random array
-    for(i=0;i<cellRows;i++){
-      let tempArr=[];
-      for(j=0;j<cellCols;j++){
-        temp=Math.round(Math.random());
-        tempArr.push(temp);
+    for(i=0;i<rows;i++){
+      let temp=[];
+      for(j=0;j<cols;j++){
+        temp.push(0);
       }
-      curCells.push(tempArr);
-    }*/
+      nextArray.push(temp);
+    }
     this.state={
-      curCells:curCells,
-      cellCols:cellCols,
-      cellRows:cellRows,
+      curCells:curArray,
+      nextCells:nextArray,
+      cellCols:cols,
+      cellRows:rows,
       simSpeed:0,
       runState:0,//0 for still alive ,1 for all dead
       generation:0,
@@ -53,7 +52,7 @@ class GameManage extends React.Component{
  }
   run(){
     this.startRun();
-    timer = window.setInterval(function(){
+    this.timer = window.setInterval(function(){
       if(this.state.runState==0){
       this.startRun();
       }
@@ -61,12 +60,7 @@ class GameManage extends React.Component{
   }
   startRun(){
       //get the next array
-      let curArray = this.state.curCells,arrFlag=this.state.arrIndex,tempNext=[];
-      if(arrFlag){
-        tempNext=nextArray;
-      }else {
-        tempNext=thirdArray;
-      }
+      let curArray = this.state.curCells,nextArray = this.state.nextCells,arrFlag=this.state.arrIndex,tempNext=[];
       let i=0,j=0,iMinus=0,jMinus=0,iPlus=0,jPlus=0,len=this.state.cellCols,hei=this.state.cellRows,val=0,rezult=0;
       for(i=0;i<hei;i++){
         for(j=0;j<len;j++){
@@ -80,8 +74,8 @@ class GameManage extends React.Component{
             console.log('here');
           }*/
           if(rezult ==3 ||(val==1&&rezult==2) ){
-            tempNext[i][j]=1;
-          }else{tempNext[i][j]=0;}
+            nextArray[i][j]=1;
+          }else{nextArray[i][j]=0;}
         }
       }
       //if all dead ,stop
@@ -89,7 +83,7 @@ class GameManage extends React.Component{
       outerLoop:
       for(i=0;i<hei;i++){
         for(j=0;j<len;j++){
-          if(tempNext[i][j]==1){
+          if(nextArray[i][j]==1){
             allDead=false;
             break outerLoop;
           }
@@ -102,28 +96,23 @@ class GameManage extends React.Component{
         //geneNew=0;
       }
       this.setState({
-        curCells:tempNext,
+        curCells:nextArray,
+        nextCells:curArray,
         runState:rState,
-        generation:geneNew,
-        arrIndex:nextIndex
+        generation:geneNew
       });
       //console.log("startRun");
   }
   pause(){
-    clearInterval(timer);
+    clearInterval(this.timer);
     this.setState({
       runState:1
     });
     //console.log('pause');
   }
   clear(){
-    clearInterval(timer);
-    let arrFlag=this.state.arrIndex,temparray=[],len=this.state.cellCols,hei=this.state.cellRows,i=0,j=0;
-    if(arrFlag){
-      temparray=nextArray;
-    }else {
-      temparray=thirdArray;
-    }
+    clearInterval(this.timer);
+    let arrFlag=this.state.arrIndex,temparray=this.state.curCells,len=this.state.cellCols,hei=this.state.cellRows,i=0,j=0;
     for(i=0;i<hei;i++){
       for(j=0;j<len;j++){
         temparray[i][j]=0;
@@ -133,7 +122,6 @@ class GameManage extends React.Component{
       curCells:temparray,
       runState:1,
       generation:0,
-      arrIndex:!arrFlag
     })
   }
   cellClick(val){
@@ -148,7 +136,7 @@ class GameManage extends React.Component{
   render(){
     //curCells->divs
     let cells=[];
-    let i=0,j=0,len=this.state.cellCols,narray=this.state.curCells,tempValue=0;
+    let i=0,j=0,len=this.state.cellCols,hei=this.state.cellRows,narray=this.state.curCells,tempValue=0;
     const cellArray = narray.map(function(ele,ind){
       let cellRow = ele.map(function(e,i){
           tempValue=narray[ind][i];
@@ -186,22 +174,7 @@ class GameManage extends React.Component{
   }
 }
 
-let nextArray = [],thirdArray = [],emptyArray=[],timer;
-let cols=50,rows=30,i=0,j=0;
-for(i=0;i<rows;i++){
-  let temp=[];
-  for(j=0;j<cols;j++){
-    temp.push(0);
-  }
-  nextArray.push(temp);
-}
-for(i=0;i<rows;i++){
-  let temp=[];
-  for(j=0;j<cols;j++){
-    temp.push(0);
-  }
-  thirdArray.push(temp);
-}
+
 
 ReactDOM.render(
   <GameManage />,
