@@ -224,7 +224,7 @@ class GameManage extends React.Component{
           <button className='btn btn-danger' onClick={this.run}>Run</button>
           <button className='btn btn-primary' onClick={this.pause}>Pause</button>
           <button className='btn btn-primary' onClick={this.clear}>Clear</button>
-          <span>Generations:{this.state.generation}</span>
+          Generations:<span id='gene'>{this.state.generation}</span>
         </div>
         <div><div id='cells' cellClick={this.cellClick}>{cellArray}</div></div>
         <div>
@@ -236,7 +236,7 @@ class GameManage extends React.Component{
             <button className='btn btn-primary' onClick={this.changeSize} value='3'>Size:80X50</button>
           </div>
           <div id='speedCtr'>
-            <span>Sim Speed:</span>
+            <span>Sim  Speed:</span>
             <button className='btn btn-primary' onClick={this.changeSpeed} value='400'>Slow</button>
             <button className='btn btn-primary' onClick={this.changeSpeed} value='80'>Medium</button>
             <button className='btn btn-primary' onClick={this.changeSpeed} value='20'>Fast</button>
