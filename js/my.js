@@ -8,7 +8,7 @@ class GameManage extends React.Component{
     this.cellClick=this.cellClick.bind(this);
     this.changeSize=this.changeSize.bind(this);
     //create two arrays to store changes
-    let curArray = [],nextArray = [],cols=50,rows=30,i=0,j=0;//init for the biggest area
+    let curArray = [],nextArray = [],cols=80,rows=50,i=0,j=0;//init for the biggest area
     for(i=0;i<rows;i++){
       let temp=[];
       for(j=0;j<cols;j++){
@@ -186,7 +186,7 @@ class GameManage extends React.Component{
       this.timer = window.setTimeout(function(){
         //console.log(Date.now()+':updated and generation is: '+this.state.generation);
         this.startRun();
-      }.bind(this),5);
+      }.bind(this),20);
     }
   }
   render(){
