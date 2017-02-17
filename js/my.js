@@ -8,7 +8,7 @@ class GameManage extends React.Component{
     this.cellClick=this.cellClick.bind(this);
     this.changeSize=this.changeSize.bind(this);
     //create two arrays to store changes
-    let curArray = [],nextArray = [],cols=80,rows=50,i=0,j=0;//init for the biggest area
+    let curArray = [],nextArray = [],cols=50,rows=30,i=0,j=0;//init for the biggest area
     for(i=0;i<rows;i++){
       let temp=[];
       for(j=0;j<cols;j++){
@@ -42,7 +42,7 @@ class GameManage extends React.Component{
   }
   startRun(){
       //get the next array
-      console.log(Date.now()+':startRun begins and generation is :'+this.state.generation);
+      //console.log(Date.now()+':startRun begins and generation is :'+this.state.generation);
       this.timer && clearTimeout(this.timer);
       let curArray = this.state.curCells,nextArray = this.state.nextCells,tempNext=[];
       let i=0,j=0,iMinus=0,jMinus=0,iPlus=0,jPlus=0,len=this.state.cellCols,hei=this.state.cellRows,val=0,rezult=0;
@@ -80,7 +80,7 @@ class GameManage extends React.Component{
         rState = 1;
         //geneNew=0;
       }
-      console.log(Date.now()+':startRun completed before setState');
+      //console.log(Date.now()+':startRun completed before setState');
       this.setState({
         curCells:nextArray,
         nextCells:curArray,
@@ -122,7 +122,7 @@ class GameManage extends React.Component{
     });
   }
   changeSize(e){
-    console.log(Date.now()+':begin change size');
+    //console.log(Date.now()+':begin change size');
     this.timer && clearTimeout(this.timer);
     //get the current size value
     let len=this.state.cellCols,curSize=0,nextSize=e.target.value;
@@ -178,16 +178,13 @@ class GameManage extends React.Component{
         runState:1
       })
     }
-    console.log(Date.now()+':stopped change size');
-  }
-  componentDidMount(){
-    console.log(Date.now()+':mounted');
+    //console.log(Date.now()+':stopped change size');
   }
   componentDidUpdate(){
-    console.log(Date.now()+':generation '+this.state.generation+' updateed');
+    //console.log(Date.now()+':generation '+this.state.generation+' updateed');
     if(this.state.runState==0){
       this.timer = window.setTimeout(function(){
-        console.log(Date.now()+':updated and generation is: '+this.state.generation);
+        //console.log(Date.now()+':updated and generation is: '+this.state.generation);
         this.startRun();
       }.bind(this),5);
     }
@@ -235,8 +232,6 @@ class GameManage extends React.Component{
 
   }
 }
-
-
 
 ReactDOM.render(
   <GameManage />,
