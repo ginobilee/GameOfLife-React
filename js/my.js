@@ -8,14 +8,17 @@ class GameManage extends React.Component{
     this.cellClick=this.cellClick.bind(this);
     this.changeSize=this.changeSize.bind(this);
     //create two arrays to store changes
-    let curArray = [],nextArray = [],cols=60,rows=40,i=0,j=0;//init for the biggest area
+    let curArray = [],nextArray = [],cols=80,rows=50,i=0,j=0;//init for the biggest area
     for(i=0;i<rows;i++){
       let temp=[];
       for(j=0;j<cols;j++){
-        temp.push(0);
+        temp.push(Math.round(Math.random()));
+        //temp.push(0);
       }
       curArray.push(temp);
     }
+    //set a complexed start
+
     for(i=0;i<rows;i++){
       let temp=[];
       for(j=0;j<cols;j++){
@@ -36,15 +39,11 @@ class GameManage extends React.Component{
  }
   run(){
     this.startRun();
-    this.timer = window.setInterval(function(){
-      if(this.state.runState==0){
-      this.startRun();
-      }
-    }.bind(this),500);
   }
   startRun(){
       //get the next array
-      console.log(Date.now()+':startRun begins');
+      console.log(Date.now()+':startRun begins and generation is :'+this.state.generation);
+      this.timer && clearTimeout(this.timer);
       let curArray = this.state.curCells,nextArray = this.state.nextCells,tempNext=[];
       let i=0,j=0,iMinus=0,jMinus=0,iPlus=0,jPlus=0,len=this.state.cellCols,hei=this.state.cellRows,val=0,rezult=0;
       for(i=0;i<hei;i++){
@@ -81,24 +80,24 @@ class GameManage extends React.Component{
         rState = 1;
         //geneNew=0;
       }
-      //console.log(Date.now()+':startRun completed before setState');
+      console.log(Date.now()+':startRun completed before setState');
       this.setState({
         curCells:nextArray,
         nextCells:curArray,
         runState:rState,
         generation:geneNew
       });
-      //console.log(Date.now()+':startRun completed after setState');
+
   }
   pause(){
-    clearInterval(this.timer);
+    this.timer && clearTimeout(this.timer);
     this.setState({
       runState:1
     });
     //console.log('pause');
   }
   clear(){
-    clearInterval(this.timer);
+    this.timer && clearTimeout(this.timer);
     let temparray=this.state.curCells,len=this.state.cellCols,hei=this.state.cellRows,i=0,j=0;
     for(i=0;i<hei;i++){
       for(j=0;j<len;j++){
@@ -124,7 +123,7 @@ class GameManage extends React.Component{
   }
   changeSize(e){
     console.log(Date.now()+':begin change size');
-    this.timer && clearInterval(this.timer);
+    this.timer && clearTimeout(this.timer);
     //get the current size value
     let len=this.state.cellCols,curSize=0,nextSize=e.target.value;
     switch (len) {
@@ -185,13 +184,19 @@ class GameManage extends React.Component{
     console.log(Date.now()+':mounted');
   }
   componentDidUpdate(){
-    console.log(Date.now()+':updateed');
+    console.log(Date.now()+':generation '+this.state.generation+' updateed');
+    if(this.state.runState==0){
+      this.timer = window.setTimeout(function(){
+        console.log(Date.now()+':updated and generation is: '+this.state.generation);
+        this.startRun();
+      }.bind(this),5);
+    }
   }
   render(){
     //curCells->divs
     //console.log(Date.now()+':into render ');
     let cells=[];
-    let i=0,j=0,len=this.state.cellCols,hei=this.state.cellRows,narray=this.state.curCells,tempValue=0;
+    let i=0,j=0,len=this.state.cellCols,hei=this.state.cellRows,narray=this.state.curCells,tempValue=0,oneDimArr=[];
     const cellArray = narray.map(function(ele,ind){
       let cellRow = ele.map(function(e,i){
           tempValue=narray[ind][i];
@@ -199,7 +204,7 @@ class GameManage extends React.Component{
         },this);
       return <div className='cellRow' key={ind}>{cellRow}</div>;
     },this);
-    console.log(Date.now()+':complete array building');
+    //console.log(Date.now()+':complete array building');
     return (
       <div>
         <div id='ctrBtns'>
