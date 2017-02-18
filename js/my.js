@@ -7,6 +7,7 @@ class GameManage extends React.Component{
     this.startRun = this.startRun.bind(this);
     this.cellClick=this.cellClick.bind(this);
     this.changeSize=this.changeSize.bind(this);
+    this.changeSpeed=this.changeSpeed.bind(this);
     //create two arrays to store changes
     let curArray = [],nextArray = [],cols=80,rows=50,i=0,j=0;//init for the biggest area
     for(i=0;i<rows;i++){
@@ -33,9 +34,13 @@ class GameManage extends React.Component{
       cellRows:rows,
       simSpeed:0,
       runState:0,//0 for still alive ,1 for all dead
-      generation:0
+      generation:0,
+      speed:10
     }
    //console.log(curCells);
+ }
+ componentDidMount(){
+   this.run();
  }
   run(){
     this.startRun();
@@ -90,6 +95,7 @@ class GameManage extends React.Component{
 
   }
   pause(){
+    console.log('pause');
     this.timer && clearTimeout(this.timer);
     this.setState({
       runState:1
@@ -180,6 +186,20 @@ class GameManage extends React.Component{
     }
     //console.log(Date.now()+':stopped change size');
   }
+  changeSpeed(e){
+    //console.log(Date.now()+':begin change speed');
+    this.timer && clearTimeout(this.timer);
+    //get the current speed value
+    let curSpeed=this.state.speed,nextSpeed=parseInt(e.target.value);
+    console.log(nextSpeed);
+    if(curSpeed != nextSpeed){
+      //change the speed
+      this.setState({
+        speed:nextSpeed,
+        runState
+      })
+    }
+  }
   componentDidUpdate(){
     //console.log(Date.now()+':generation '+this.state.generation+' updateed');
     if(this.state.runState==0){
@@ -221,9 +241,9 @@ class GameManage extends React.Component{
           </div>
           <div id='speedCtr'>
             <span>Sim Speed:</span>
-            <button className='btn btn-primary'>Slow</button>
-            <button className='btn btn-primary'>Medium</button>
-            <button className='btn btn-primary'>Fast</button>
+            <button className='btn btn-primary' onClick={this.changeSpeed} value='200'>Slow</button>
+            <button className='btn btn-primary' onClick={this.changeSpeed} value='50'>Medium</button>
+            <button className='btn btn-primary' onClick={this.changeSpeed} value='10'>Fast</button>
           </div>
         </div>
         </div>
