@@ -34,11 +34,7 @@ class GameManage extends React.Component{
       cellRows:rows,
       runState:0,//0 for still alive ,1 for all dead
       generation:0,
-<<<<<<< HEAD
-      speed:10
-=======
       speed:50
->>>>>>> refs/remotes/origin/gh-pages
     }
    //console.log(curCells);
  }
@@ -199,11 +195,7 @@ class GameManage extends React.Component{
       //change the speed
       this.setState({
         speed:nextSpeed,
-<<<<<<< HEAD
-        runState
-=======
         runState:0
->>>>>>> refs/remotes/origin/gh-pages
       })
     }
   }
@@ -249,13 +241,10 @@ class GameManage extends React.Component{
           <div id='speedCtr'>
             <span>Sim Speed:</span>
             <button className='btn btn-primary' onClick={this.changeSpeed} value='200'>Slow</button>
-<<<<<<< HEAD
             <button className='btn btn-primary' onClick={this.changeSpeed} value='50'>Medium</button>
             <button className='btn btn-primary' onClick={this.changeSpeed} value='10'>Fast</button>
-=======
             <button className='btn btn-primary' onClick={this.changeSpeed} value='100'>Medium</button>
             <button className='btn btn-primary' onClick={this.changeSpeed} value='50'>Fast</button>
->>>>>>> refs/remotes/origin/gh-pages
           </div>
         </div>
         </div>
