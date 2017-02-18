@@ -9,7 +9,7 @@ class GameManage extends React.Component{
     this.changeSize=this.changeSize.bind(this);
     this.changeSpeed=this.changeSpeed.bind(this);
     //create two arrays to store changes
-    let curArray = [],nextArray = [],cols=80,rows=50,i=0,j=0;//init for the biggest area
+    let curArray = [],nextArray = [],cols=60,rows=40,i=0,j=0;//init for the biggest area
     for(i=0;i<rows;i++){
       let temp=[];
       for(j=0;j<cols;j++){
@@ -32,10 +32,13 @@ class GameManage extends React.Component{
       nextCells:nextArray,
       cellCols:cols,
       cellRows:rows,
-      simSpeed:0,
       runState:0,//0 for still alive ,1 for all dead
       generation:0,
+<<<<<<< HEAD
       speed:10
+=======
+      speed:50
+>>>>>>> refs/remotes/origin/gh-pages
     }
    //console.log(curCells);
  }
@@ -196,7 +199,11 @@ class GameManage extends React.Component{
       //change the speed
       this.setState({
         speed:nextSpeed,
+<<<<<<< HEAD
         runState
+=======
+        runState:0
+>>>>>>> refs/remotes/origin/gh-pages
       })
     }
   }
@@ -206,7 +213,7 @@ class GameManage extends React.Component{
       this.timer = window.setTimeout(function(){
         //console.log(Date.now()+':updated and generation is: '+this.state.generation);
         this.startRun();
-      }.bind(this),20);
+      }.bind(this),this.state.speed);
     }
   }
   render(){
@@ -242,8 +249,13 @@ class GameManage extends React.Component{
           <div id='speedCtr'>
             <span>Sim Speed:</span>
             <button className='btn btn-primary' onClick={this.changeSpeed} value='200'>Slow</button>
+<<<<<<< HEAD
             <button className='btn btn-primary' onClick={this.changeSpeed} value='50'>Medium</button>
             <button className='btn btn-primary' onClick={this.changeSpeed} value='10'>Fast</button>
+=======
+            <button className='btn btn-primary' onClick={this.changeSpeed} value='100'>Medium</button>
+            <button className='btn btn-primary' onClick={this.changeSpeed} value='50'>Fast</button>
+>>>>>>> refs/remotes/origin/gh-pages
           </div>
         </div>
         </div>
