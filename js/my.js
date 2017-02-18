@@ -194,7 +194,7 @@ class GameManage extends React.Component{
       //change the speed
       this.setState({
         speed:nextSpeed,
-        runState
+        runState:0
       })
     }
   }
