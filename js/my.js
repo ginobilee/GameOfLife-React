@@ -32,7 +32,6 @@ class GameManage extends React.Component{
       nextCells:nextArray,
       cellCols:cols,
       cellRows:rows,
-      simSpeed:0,
       runState:0,//0 for still alive ,1 for all dead
       generation:0,
       speed:50
@@ -241,8 +240,8 @@ class GameManage extends React.Component{
           <div id='speedCtr'>
             <span>Sim Speed:</span>
             <button className='btn btn-primary' onClick={this.changeSpeed} value='200'>Slow</button>
-            <button className='btn btn-primary' onClick={this.changeSpeed} value='50'>Medium</button>
-            <button className='btn btn-primary' onClick={this.changeSpeed} value='10'>Fast</button>
+            <button className='btn btn-primary' onClick={this.changeSpeed} value='100'>Medium</button>
+            <button className='btn btn-primary' onClick={this.changeSpeed} value='50'>Fast</button>
           </div>
         </div>
         </div>
